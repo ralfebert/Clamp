@@ -1,7 +1,11 @@
 @testable import Clamp
 import XCTest
 
-class ClampPropertyWrapperTests: XCTestCase {
+struct ExampleModel {
+    @Clamping(0 ... 10) var someValue = 5.0
+}
+
+class ClampingPropertyWrapperTests: XCTestCase {
     func testClampModelValue() {
         var model = ExampleModel()
 
@@ -19,5 +23,12 @@ class ClampPropertyWrapperTests: XCTestCase {
 
         model.someValue = 11.0
         XCTAssertEqual(10.0, model.someValue)
+    }
+
+    func testClampVariable() {
+        @Clamping(0 ... 10) var value = -1
+        XCTAssertEqual(0, value)
+        value = 11
+        XCTAssertEqual(10, value)
     }
 }
